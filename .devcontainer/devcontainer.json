@@ -2,7 +2,7 @@
   "name": "DrBushyTop",
   "build": {
     "args": {
-      "USERNAME": "vscode",
+      "USERNAME": "codespace",
       "INSTALL_ZSH": "true",
       "INSTALL_AZURE_CLI": "true"
     }    
@@ -20,7 +20,7 @@
       "ms-vscode.azurecli",
       "ms-azure-devops.azure-pipelines"
   ],
-  "remoteUser": "vscode",
+  "remoteUser": "codespace",
   "forwardPorts": [5000, 5001],
   "settings": {
       "breadcrumbs.enabled": true,
