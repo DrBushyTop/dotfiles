@@ -1,5 +1,7 @@
 # set non-interactive installation
 export DEBIAN_FRONTEND=noninteractive
+export INSTALL_ZSH=true
+export USERNAME=codespace
 
 ## update and install required packages
 sudo apt-get update
