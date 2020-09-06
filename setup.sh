@@ -1,4 +1,3 @@
-# set non-interactive installation
 export DEBIAN_FRONTEND=noninteractive
 export INSTALL_ZSH=true
 export USERNAME=`whoami`
