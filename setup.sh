@@ -2,42 +2,44 @@
 export DEBIAN_FRONTEND=noninteractive
 
 ## update and install required packages
-apt-get update
-apt-get -y install --no-install-recommends apt-utils dialog 2>&1
-apt-get install -y \
+sudo apt-get update
+sudo apt-get -y install --no-install-recommends apt-utils dialog 2>&1
+sudo apt-get install -y \
   curl \
   git \
   gnupg2 \
   jq \
   sudo \
-  openssh-client \  
+  openssh-client \
   less \
   iproute2 \
   procps \
   wget \
+  unzip \
   apt-transport-https \
   lsb-release 
 
 # Create a non-root user to use if preferred - see https://aka.ms/vscode-remote/containers/non-root-user.
-groupadd --gid $USER_GID $USERNAME
-useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME
-echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME
-chmod 0440 /etc/sudoers.d/$USERNAME
+# groupadd --gid $USER_GID $USERNAME
+# useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME
+# echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME
+# chmod 0440 /etc/sudoers.d/$USERNAME
 
 # Install Azure CLI
 echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" > /etc/apt/sources.list.d/azure-cli.list
-curl -sL https://packages.microsoft.com/keys/microsoft.asc | apt-key add - 2>/dev/null
-apt-get update
-apt-get install -y azure-cli;
+curl -sL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add - 2>/dev/null
+sudo apt-get update
+sudo apt-get install -y azure-cli;
 
 # Install Jetbrains Mono font
-wget https://download.jetbrains.com/fonts/JetBrainsMono-2.001.zip | unzip -d /usr/share/fonts
-fc-cache -f -v
+wget https://download.jetbrains.com/fonts/JetBrainsMono-2.001.zip
+sudo unzip JetBrainsMono-2.001.zip -d /usr/share/fonts
+sudo fc-cache -f -v
 
 # Install & Configure Zsh
 if [ "$INSTALL_ZSH" = "true" ]
 then
-    apt-get install -y \
+    sudo apt-get install -y \
     fonts-powerline \
     zsh
 
@@ -49,6 +51,6 @@ then
 fi
 
 # Cleanup
-apt-get autoremove -y
-apt-get autoremove -y
-rm -rf /var/lib/apt/lists/*
+sudo apt-get autoremove -y
+sudo apt-get autoremove -y
+sudo rm -rf /var/lib/apt/lists/*
