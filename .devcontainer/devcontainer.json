@@ -1,0 +1,49 @@
+{
+  "name": "DrBushyTop",
+  "build": {
+    "args": {
+      "USERNAME": "vscode",
+      "INSTALL_ZSH": "true",
+      "INSTALL_AZURE_CLI": "true"
+    }    
+  },
+  "extensions": [
+      "ms-dotnettools.csharp",
+      "ms-azuretools.vscode-docker",
+      "ms-vsliveshare.vsliveshare",
+      "vscode-icons-team.vscode-icons",
+      "bencoleman.armview",
+      "redhat.vscode-yaml",
+      "oderwat.indent-rainbow",
+      "msazurermtools.azurerm-vscode-tools",
+      "ms-vscode.powershell",
+      "ms-vscode.azurecli",
+      "ms-azure-devops.azure-pipelines"
+  ],
+  "remoteUser": "vscode",
+  "forwardPorts": [5000, 5001],
+  "settings": {
+      "breadcrumbs.enabled": true,
+      "terminal.integrated.shell.linux": "/bin/usr/zsh",
+      "editor.fontFamily": "'JetBrains Mono'",
+      "editor.fontSize": 13,
+      "editor.tabSize": 2,
+      "workbench.iconTheme": "vscode-icons",
+      "workbench.colorTheme": "Default Dark+",
+      "indentRainbow.colors": [
+        "rgba(255,255,64,0.2)",
+        "rgba(127,255,127,0.2)",
+        "rgba(255,127,255,0.2)",
+        "rgba(79,236,236,0.2)"
+      ],
+      "[git-commit]": {
+        "editor.rulers": [72, 50],
+        "editor.wordWrap": "off"
+      },
+      "files.exclude": {
+          "**/.gitignore": true,
+          "**/SECURITY.md": true,
+          "**/LICENSE": true
+      }
+  }
+}
