@@ -28,7 +28,7 @@ sudo apt-get install -y \
 # chmod 0440 /etc/sudoers.d/$USERNAME
 
 # Install Azure CLI
-echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" > /etc/apt/sources.list.d/azure-cli.list
+sudo echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" > /etc/apt/sources.list.d/azure-cli.list
 curl -sL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add - 2>/dev/null
 sudo apt-get update
 sudo apt-get install -y azure-cli;
