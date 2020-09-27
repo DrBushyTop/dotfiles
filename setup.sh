@@ -1,5 +1,5 @@
 export DEBIAN_FRONTEND=noninteractive
-export INSTALL_ZSH=false
+export INSTALL_ZSH=true
 export USERNAME=`true`
 
 ## update and install required packages
