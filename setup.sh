@@ -1,5 +1,5 @@
 export DEBIAN_FRONTEND=noninteractive
-export INSTALL_ZSH=true
+export INSTALL_ZSH=false
 export USERNAME=`whoami`
 
 ## update and install required packages
