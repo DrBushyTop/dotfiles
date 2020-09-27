@@ -1,6 +1,6 @@
 export DEBIAN_FRONTEND=noninteractive
 export INSTALL_ZSH=false
-export USERNAME=`whoami`
+export USERNAME=`true`
 
 ## update and install required packages
 sudo apt-get update
@@ -40,9 +40,9 @@ sudo fc-cache -f -v
 # Install & Configure Zsh
 if [ "$INSTALL_ZSH" = "true" ]
 then
-#    sudo apt-get install -y \
-#    fonts-powerline \
-#    zsh
+    sudo apt-get install -y \
+    fonts-powerline \
+    zsh
 
     cp -f ~/dotfiles/.zshrc ~/.zshrc
 #    chsh -s /usr/bin/zsh $USERNAME
