@@ -40,9 +40,9 @@ sudo fc-cache -f -v
 # Install & Configure Zsh
 if [ "$INSTALL_ZSH" = "true" ]
 then
-    sudo apt-get install -y \
-    fonts-powerline \
-    zsh
+#    sudo apt-get install -y \
+#    fonts-powerline \
+#    zsh
 
     cp -f ~/dotfiles/.zshrc ~/.zshrc
     chsh -s /usr/bin/zsh $USERNAME
