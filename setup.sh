@@ -1,6 +1,7 @@
 export DEBIAN_FRONTEND=noninteractive
 export INSTALL_ZSH=true
 export USERNAME=`whoami`
+export SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 ## update and install required packages
 sudo apt-get update
@@ -50,23 +51,30 @@ wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/JetBrainsM
 sudo unzip JetBrainsMono.zip -d /usr/share/fonts
 sudo fc-cache -f -v
 
+
 ## Install more tools from homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew install $(cat packages-brew) --force
+echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/${USERNAME}/.profile
+export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}";
+brew install $(cat ${SCRIPT_DIR}/.config/packages-brew) --force
 
 # Install & Configure Zsh
 sudo apt-get install -y \
 fonts-powerline \
 zsh
 
-cp -f ~/dotfiles/.zshrc ~/.zshrc
+rsync -av ${SCRIPT_DIR}/.config /home/${USERNAME}
+cp -f ${SCRIPT_DIR}/.zshrc /home/${USERNAME}/.zshrc
+cp -f ${SCRIPT_DIR}/.p10k.zsh /home/${USERNAME}/.p10k.zsh
+cp -f ${SCRIPT_DIR}/.fzf.zsh /home/${USERNAME}/fzf.zshc
+
 #    chsh -s /usr/bin/zsh $USERNAME
 sh -c "$(wget -qO- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
 echo "source $PWD/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
-echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  && [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' | tee -a /home/${USERNAME}/.bashrc /home/${USERNAME}/.zshrc >> /root/.zshrc
-echo "if [-d ${NVM_DIR}] && [ \"\$(stat -c '%U' ${NVM_DIR})\" != \"${USERNAME}\" ]; then sudo chown -R ${USER_UID}:root ${NVM_DIR}; fi" | tee -a /root/.bashrc /root/.zshrc /home/${USERNAME}/.bashrc >> /home/${USERNAME}/.zshrc
+echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  && [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' | tee -a /home/${USERNAME}/.bashrc /home/${USERNAME}/.zshrc >> /home/${USERNAME}/.zshrc
+echo "if [ -d ${NVM_DIR} ] && [ \"\$(stat -c '%U' ${NVM_DIR})\" != \"${USERNAME}\" ]; then sudo chown -R ${USER_UID}:root ${NVM_DIR}; fi" | tee -a /home/${USERNAME}/.bashrc /home/${USERNAME}/.zshrc /home/${USERNAME}/.bashrc >> /home/${USERNAME}/.zshrc
 
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 

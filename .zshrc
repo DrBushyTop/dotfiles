@@ -113,7 +113,7 @@ alias az="/usr/bin/az"
 alias k=kubectl
 complete -F __start_kubectl k
 
-source /home/pasi/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /home/$(whoami)/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source <(kubectl completion zsh)
 source <(flux completion zsh)
 compdef _flux flux
