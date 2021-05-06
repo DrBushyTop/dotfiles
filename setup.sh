@@ -70,6 +70,7 @@ echo "if [-d ${NVM_DIR}] && [ \"\$(stat -c '%U' ${NVM_DIR})\" != \"${USERNAME}\"
 
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
+
 # Cleanup
 sudo apt-get autoremove -y
 sudo apt-get autoremove -y
