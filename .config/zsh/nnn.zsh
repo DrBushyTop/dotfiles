@@ -7,4 +7,4 @@ export NNN_USE_EDITOR=1
 
 source ~/.config/zsh/quitcd.zsh
 
-alias nnn="n -e"
+alias nnn="nnn -e"

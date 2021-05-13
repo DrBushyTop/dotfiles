@@ -2,6 +2,7 @@ export DEBIAN_FRONTEND=noninteractive
 export INSTALL_ZSH=true
 export USERNAME=`whoami`
 export SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+export CI="True"
 
 ## update and install required packages
 sudo apt-get update
@@ -20,7 +21,8 @@ sudo apt-get install -y \
   unzip \
   apt-transport-https \
   software-properties-common \
-  lsb-release 
+  lsb-release \
+  rsync
 
 ## Pwsh
 # Download the Microsoft repository GPG keys
@@ -48,7 +50,7 @@ sudo apt-get install -y powershell
 
 # Install Jetbrains Mono font
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/JetBrainsMono.zip
-sudo unzip JetBrainsMono.zip -d /usr/share/fonts
+sudo unzip -o JetBrainsMono.zip -d /usr/share/fonts
 sudo fc-cache -f -v
 
 
@@ -66,7 +68,7 @@ zsh
 rsync -av ${SCRIPT_DIR}/.config /home/${USERNAME}
 cp -f ${SCRIPT_DIR}/.zshrc /home/${USERNAME}/.zshrc
 cp -f ${SCRIPT_DIR}/.p10k.zsh /home/${USERNAME}/.p10k.zsh
-cp -f ${SCRIPT_DIR}/.fzf.zsh /home/${USERNAME}/fzf.zshc
+cp -f ${SCRIPT_DIR}/.fzf.zsh /home/${USERNAME}/.fzf.zshc
 
 #    chsh -s /usr/bin/zsh $USERNAME
 sh -c "$(wget -qO- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
