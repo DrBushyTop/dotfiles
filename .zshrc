@@ -113,7 +113,6 @@ alias az="/usr/bin/az"
 alias k=kubectl
 complete -F __start_kubectl k
 
-source /home/$(whoami)/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source <(kubectl completion zsh)
 source <(flux completion zsh)
 compdef _flux flux
@@ -132,3 +131,6 @@ alias j='fasd_cd -d'
 
 # Editor
 export EDITOR='code'
+
+# BREW
+export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}";
