@@ -129,8 +129,9 @@ source ~/.config/zsh/nnn.zsh
 eval "$(fasd --init zsh-wcomp-install zsh-hook zsh-ccomp)"
 alias j='fasd_cd -d'
 
-# Editor
-export EDITOR='code'
+# Editor for k9s / visual for NNN  
+export VISUAL='code'
+export EDITOR='code -w'
 
 # BREW
 export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}";
