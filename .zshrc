@@ -165,3 +165,4 @@ export PATH=$HOME/go/bin:$PATH
 
 # Scripts path
 export PATH=$HOME/scripts:$PATH
+export PATH=$HOME/bin:$PATH
