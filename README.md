@@ -1,2 +1,2 @@
 # dotfiles
-Personal configuration for Codespaces
+Personal configuration

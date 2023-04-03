@@ -1,9 +1,13 @@
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
+sleep 0.1
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+
+## Brew completions
+##for f in /opt/homebrew/etc/bash_completion.d/*; do source $f; done
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -79,10 +83,18 @@ plugins=(
   git
   zsh-autosuggestions
   fasd
+  docker
+  docker-compose
+  kubectl
+  fzf
 )
+
+FPATH="$(brew --prefix)/share/zsh-completions:${FPATH}"
+FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 
 source $ZSH/oh-my-zsh.sh
 
+rm -f ~/.zcompdump; compinit
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -108,9 +120,8 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-alias az="/usr/bin/az"
 alias k=kubectl
+alias g=git
 complete -F __start_kubectl k
 
 source <(kubectl completion zsh)
@@ -120,18 +131,37 @@ compdef _flux flux
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # NNN
-source ~/.config/zsh/nnn.zsh
+source ~/.config/nnn/nnn.zsh
+
+# Brew
+source /.config/homebrew/brew.zsh
 
 # Fasd
 eval "$(fasd --init zsh-wcomp-install zsh-hook zsh-ccomp)"
 alias j='fasd_cd -d'
 
+# Kitty SSH
+alias kssh='kitty +kitten ssh'
+# Kitty conf
+export KITTY_CONFIG_DIRECTORY='~/.config/kitty/'
+
 # Editor for k9s / visual for NNN  
 export VISUAL='code'
 export EDITOR='code -w'
 
-# BREW
-export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}";
+source /Users/pasi/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /opt/homebrew/etc/bash_completion.d/az
+
+# Keybindings 
+bindkey "\e[1;3D" backward-word # ⌥←
+bindkey "\e[1;3C" forward-word # ⌥→
+
+# Go install path
+export PATH=$HOME/go/bin:$PATH
+
+# Scripts path
+export PATH=$HOME/scripts:$PATH
