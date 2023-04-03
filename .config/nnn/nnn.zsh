@@ -5,6 +5,6 @@ export NNN_FCOLORS='0000E63100000000000000000'
 export NNN_TMPFILE='true'
 export NNN_USE_EDITOR=1
 
-source ~/.config/zsh/quitcd.zsh
+source ~/.config/nnn/quitcd.zsh
 
 alias nnn="nnn -e"

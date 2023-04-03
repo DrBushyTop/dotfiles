@@ -138,7 +138,7 @@ compdef _flux flux
 source ~/.config/nnn/nnn.zsh
 
 # Brew
-source /.config/homebrew/brew.zsh
+source ~/.config/homebrew/brew.zsh
 
 # Fasd
 eval "$(fasd --init zsh-wcomp-install zsh-hook zsh-ccomp)"
