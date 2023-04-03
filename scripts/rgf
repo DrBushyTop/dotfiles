@@ -1,0 +1,22 @@
+#!/bin/zsh
+
+##
+# Interactive search.
+#
+[[ -n $1 ]] && cd "$1" # go to provided folder or noop
+
+export FZF_DEFAULT_OPTS="--history=$HOME/.fzf-history"
+export FZF_DEFAULT_COMMAND="rg --column --line-number --no-heading --color=always -- ''"
+IFS=$'\n' # Set Internal Field Separator to newline for iterating over lines
+selected=($(fzf \
+  --ansi \
+  --delimiter : \
+  --multi \
+  --preview-window 'right,50%,border-left,+{2}+3/3,~3' \
+  --preview 'bat -f --highlight-line={2} {1}' | cut -d":" -f1,2,3))
+
+if [[ -n $selected ]]; then
+  for file in "${selected[@]}"; do
+    code -g "$PWD"/"$file"
+  done
+fi
