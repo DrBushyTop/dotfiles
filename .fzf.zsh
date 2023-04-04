@@ -34,7 +34,7 @@ _fzf_compgen_dir() {
 }
 
 # fzf git
-source .fzf-git.zsh
+source ~/.fzf-git.zsh
 
 function gco() {
   if [ "$#" -eq 0 ]; then
