@@ -44,4 +44,4 @@ function gco() {
     git checkout "$@"
   fi
 }
-alias gco='gco ""'
+alias gco='gco'
