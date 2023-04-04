@@ -33,3 +33,15 @@ _fzf_compgen_dir() {
   fd --type d --hidden --follow --exclude ".git" . "$1"
 }
 
+# fzf git
+source .fzf-git.zsh
+
+function gco() {
+  if [ "$#" -eq 0 ]; then
+    local selected=$(_fzf_git_each_ref --no-multi)
+    [ -n "$selected" ] && git checkout "$selected"
+  else
+    git checkout "$@"
+  fi
+}
+alias gco='gco ""'
