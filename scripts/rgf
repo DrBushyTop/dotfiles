@@ -12,7 +12,7 @@ selected=($(fzf \
   --ansi \
   --delimiter : \
   --multi \
-  --preview-window 'right,50%,border-left,+{2}+3/3,~3' \
+  --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
   --preview 'bat -f --highlight-line={2} {1}' | cut -d":" -f1,2,3))
 
 if [[ -n $selected ]]; then
