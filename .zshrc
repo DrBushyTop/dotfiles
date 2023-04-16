@@ -122,6 +122,7 @@ rm -f ~/.zcompdump; compinit
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias k=kubectl
 alias g=git
+alias vim=nvim
 complete -F __start_kubectl k
 
 source <(kubectl completion zsh)
