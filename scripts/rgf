@@ -6,7 +6,7 @@
 [[ -n $1 ]] && cd "$1" # go to provided folder or noop
 
 export FZF_DEFAULT_OPTS="--history=$HOME/.fzf-history"
-export FZF_DEFAULT_COMMAND="rg --column --line-number --no-heading --color=always -- ''"
+export FZF_DEFAULT_COMMAND="rg --column --line-number --no-heading --color=always --hidden --glob '!{.git,node_modules}/**' -- ''"
 IFS=$'\n' # Set Internal Field Separator to newline for iterating over lines
 selected=($(fzf \
   --ansi \
