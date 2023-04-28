@@ -82,7 +82,6 @@ HIST_STAMPS="dd.mm.yyyy"
 plugins=(
   git
   zsh-autosuggestions
-  fasd
   docker
   docker-compose
   kubectl
@@ -123,6 +122,12 @@ rm -f ~/.zcompdump; compinit
 alias k=kubectl
 alias g=git
 alias vim=nvim
+alias sed=sd
+alias cat=bat
+alias curl=xh
+alias ls='exa --icons --git'
+alias lt='exa --tree --level=2 --long --icons --git'
+
 complete -F __start_kubectl k
 
 source <(kubectl completion zsh)
@@ -141,9 +146,9 @@ source ~/.config/nnn/nnn.zsh
 # Brew
 source ~/.config/homebrew/brew.zsh
 
-# Fasd
-eval "$(fasd --init zsh-wcomp-install zsh-hook zsh-ccomp)"
-alias j='fasd_cd -d'
+# zoxide
+eval "$(zoxide init zsh)"
+alias j='z'
 
 # Kitty SSH
 alias kssh='kitty +kitten ssh'
@@ -151,8 +156,8 @@ alias kssh='kitty +kitten ssh'
 export KITTY_CONFIG_DIRECTORY='~/.config/kitty/'
 
 # Editor for k9s / visual for NNN  
-export VISUAL='code'
-export EDITOR='code -w'
+export VISUAL='nvim'
+export EDITOR='nvim'
 
 source /Users/pasi/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /opt/homebrew/etc/bash_completion.d/az
@@ -167,3 +172,7 @@ export PATH=$HOME/go/bin:$PATH
 # Scripts path
 export PATH=$HOME/scripts:$PATH
 export PATH=$HOME/bin:$PATH
+export PATH=$HOME/randomTools:$PATH
+
+# GH Copilot Aliases
+eval "$(github-copilot-cli alias -- "$0")"

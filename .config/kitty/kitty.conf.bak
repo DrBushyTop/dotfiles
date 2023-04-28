@@ -23,9 +23,3 @@ allow_remote_control yes
 enabled_layouts splits
 
 macos_option_as_alt yes
-
-
-# BEGIN_KITTY_THEME
-# Catppuccin-Macchiato
-include current-theme.conf
-# END_KITTY_THEME
