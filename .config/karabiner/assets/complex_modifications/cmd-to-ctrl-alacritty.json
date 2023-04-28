@@ -1,0 +1,27 @@
+{
+  "title": "cmd-to-ctrl-alacritty",
+  "rules": [
+    {
+      "manipulators": [
+        {
+          "conditions": [
+            {
+              "bundle_identifiers": ["^io\\.alacritty$"],
+              "type": "frontmost_application_if"
+            }
+          ],
+          "description": "Swap Control and Command in Alacritty",
+          "from": {
+            "key_code": "left_command"
+          },
+          "to": [
+            {
+              "key_code": "left_control"
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    }
+  ]
+}

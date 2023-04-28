@@ -1,0 +1,80 @@
+import:
+  - ~/.config/alacritty/catppuccin/catppuccin-macchiato.yml
+
+env:
+  TERM: xterm-256color
+
+selection:
+  # This string contains all characters that are used as separators for
+  # "semantic words" in Alacritty.
+  semantic_escape_chars: ",│|:\"' ()[]{}<>\t"
+  # When set to true, selected text will be copied to the primary clipboard., chars: "~"}
+  save_to_clipboard: true
+
+# Allow terminal applications to change Alacritty’s window title.
+window.dynamic_title: true
+cursor:
+  style:
+    shape: Block
+  unfocused_hollow: true
+# Live config reload (changes require restart)
+live_config_reload: true
+
+font:
+  size: 20.0
+  normal:
+    family: SauceCodePro Nerd Font Mono
+    style: Regular
+  # bold:
+  #   family: SauceCodePro Nerd Font Mono
+  #   style: Bold
+  # italic:
+  #   family: SauceCodePro Nerd Font Mono
+  #   style: Light Italic
+  # bold_italic:
+  #   family: SauceCodePro Nerd Font Mono
+  #   style: Bold Italic
+
+window:
+  decorations: none
+  startup_mode: Maximized
+  padding:
+    x: 2
+
+scrolling:
+  history: 10000
+  multiplier: 3
+
+# mac specific
+option_as_alt: Both
+
+key_bindings:
+  - { key: A, mods: Command, chars: "\x01" }
+  - { key: B, mods: Command, chars: "\x02" }
+  - { key: C, mods: Command, chars: "\x03" }
+  - { key: D, mods: Command, chars: "\x04" }
+  - { key: E, mods: Command, chars: "\x05" }
+  - { key: F, mods: Command, chars: "\x06" }
+  - { key: G, mods: Command, chars: "\x07" }
+  - { key: H, mods: Command, chars: "\x08" }
+  - { key: I, mods: Command, chars: "\x09" }
+  - { key: J, mods: Command, chars: "\x0a" }
+  - { key: K, mods: Command, chars: "\x0b" }
+  - { key: L, mods: Command, chars: "\x0c" }
+  - { key: M, mods: Command, chars: "\x0d" }
+  - { key: N, mods: Command, chars: "\x0e" }
+  - { key: O, mods: Command, chars: "\x0f" }
+  - { key: P, mods: Command, chars: "\x10" }
+  - { key: Q, mods: Command, chars: "\x11" }
+  - { key: R, mods: Command, chars: "\x12" }
+  - { key: S, mods: Command, chars: "\x13" }
+  - { key: T, mods: Command, chars: "\x14" }
+  - { key: U, mods: Command, chars: "\x15" }
+  - { key: V, mods: Command, chars: "\x16" }
+  - { key: W, mods: Command, chars: "\x17" }
+  - { key: X, mods: Command, chars: "\x18" }
+  - { key: Y, mods: Command, chars: "\x19" }
+  - { key: Z, mods: Command, chars: "\x1a" }
+  - { key: Space, mods: Command, chars: "\x00" } 
+  - { key: 30, chars: "^" }
+  - { key: 30, mods: Shift, chars: "~"}

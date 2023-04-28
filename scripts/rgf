@@ -17,6 +17,6 @@ selected=($(fzf \
 
 if [[ -n $selected ]]; then
   for file in "${selected[@]}"; do
-    code -g "$PWD"/"$file"
+    code-insiders -g "$PWD"/"$file"
   done
 fi

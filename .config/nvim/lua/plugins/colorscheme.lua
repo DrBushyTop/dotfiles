@@ -4,6 +4,8 @@ require("catppuccin").setup({
     return {
       Comment = { fg = colors.yellow },
       ["@comment"] = { fg = colors.yellow, style = { "italic" } },
+      CursorLineNr = { fg = colors.yellow },
+      LineNr = { fg = colors.yellow },
     }
   end,
 })
@@ -15,7 +17,7 @@ return {
     name = "catppuccin",
   },
 
-  -- Configure LazyVim to load gruvbox
+  -- Configure LazyVim to load catppuccin
   {
     "LazyVim/LazyVim",
     opts = {
