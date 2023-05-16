@@ -7,23 +7,17 @@ return {
     "L3MON4D3/LuaSnip",
     keys = {
       {
-        "<tab>",
+        "<S-Tab>",
         function()
-          local keycode = vim.api.nvim_replace_termcodes("<tab>", true, false, true)
-          local suggestion = require("copilot.suggestion")
-          if require("luasnip").jumpable(1) then
-            return "<Plug>luasnip-jump-next"
-          elseif suggestion.is_visible() then
-            return suggestion.accept()
-          else
-            return vim.api.nvim_feedkeys(keycode, "n", false)
+          local luasnip = require("luasnip")
+          if luasnip.jumpable(-1) then
+            luasnip.jump(-1)
           end
         end,
         expr = true,
         silent = true,
         remap = false,
         mode = "i",
-        expr,
       },
     },
   },
