@@ -1,11 +1,20 @@
 return {
   {
     "zbirenbaum/copilot.lua",
+    lazy = false,
     cmd = "Copilot",
     build = ":Copilot auth",
-    opts = {
-      suggestion = { enabled = false },
-      panel = { enabled = false },
-    },
+    config = function()
+      require("copilot").setup({
+        panel = { enabled = true },
+        suggestion = {
+          enabled = true,
+          auto_trigger = true,
+        },
+        filetypes = {
+          ["."] = true,
+        },
+      })
+    end,
   },
 }
