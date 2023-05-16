@@ -134,11 +134,19 @@ source <(kubectl completion zsh)
 source <(flux completion zsh)
 compdef _flux flux
 
+# Locale
+# Should probably live somewhere else instead
+export LC_ALL="en_US.UTF-8"
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# bat
+export BAT_THEME="Catppuccin-macchiato"
+
 # FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.config/fzf/scripts.zsh ]  && source ~/.config/fzf/scripts.zsh
 
 # NNN
 source ~/.config/nnn/nnn.zsh
@@ -173,6 +181,7 @@ export PATH=$HOME/go/bin:$PATH
 export PATH=$HOME/scripts:$PATH
 export PATH=$HOME/bin:$PATH
 export PATH=$HOME/randomTools:$PATH
+[ -f ~/scripts/cht.zsh ] && source ~/scripts/cht.zsh
 
 # GH Copilot Aliases
 eval "$(github-copilot-cli alias -- "$0")"

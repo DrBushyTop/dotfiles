@@ -7,15 +7,16 @@ return {
       ---@type lspconfig.options
       servers = {
         -- will be automatically installed with mason and loaded with lspconfig
-        bashls = {},
+        bashls = {
+          filetypes = { "sh", "zsh" },
+        },
         powershell_es = {},
         csharp_ls = {},
         bicep = {},
         jsonls = {},
         yamlls = {},
-        golangci_lint = {},
+        lua_ls = {},
         gopls = {},
-        sql = {},
       },
     },
   },
