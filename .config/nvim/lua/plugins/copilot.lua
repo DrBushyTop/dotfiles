@@ -30,8 +30,8 @@ return {
       local suggestion = require("copilot.suggestion")
       local luasnip = require("luasnip")
       local function accept()
-        if luasnip.expand_or_jumpable() then
-          luasnip.jump_or_expand()
+        if luasnip.jumpable(1) then
+          luasnip.jump(1)
         elseif suggestion.is_visible() then
           suggestion.accept()
         else

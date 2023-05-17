@@ -7,17 +7,18 @@ return {
     "L3MON4D3/LuaSnip",
     keys = {
       {
-        "<S-Tab>",
+        "<tab>",
         function()
-          local luasnip = require("luasnip")
-          if luasnip.jumpable(-1) then
-            luasnip.jump(-1)
-          end
+          require("luasnip").jump(1)
         end,
-        expr = true,
-        silent = true,
-        remap = false,
-        mode = "i",
+        mode = "s",
+      },
+      {
+        "<s-tab>",
+        function()
+          require("luasnip").jump(-1)
+        end,
+        mode = { "i", "s" },
       },
     },
   },
