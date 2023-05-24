@@ -12,6 +12,7 @@ selected=($(fzf \
   --ansi \
   --delimiter : \
   --multi \
+  --bind 'change:top'\
   --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
   --preview 'bat -f --highlight-line={2} {1}' | cut -d":" -f1,2,3))
 
