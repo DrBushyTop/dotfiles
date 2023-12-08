@@ -1,10 +1,17 @@
 [user]
 	name = Pasi Huuhka
 	email = pasi.huuhka@zure.com
+	signingkey = ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDMSBRmD1K+jcAATPR3Vck31oE8ui7kCGYL9N5WZ9brO+SFKlo8ebHnQMPIr99aGWvFK7Df9Jg5IOI8+AjXK0E8+S5OlH3HJt2b1O6ClU2j8o/Tx4mtM0qjxEROcYnzWh1cBjt9vtmizZsi3xrnnTIIkNQLro/HoU7ZELJsv+swxE3pH/m8h66ScKUNeDmskKLuL0VqBkNusRnc3kp2oeYNFSXjVF6gDp4aAZX4hKklf+LH+UipHtdiVfGdyhxTBWuMH/Rc5MeEZje+6G1uYbQqCSL7GsGJULYt5390+3KJxYKlB5SlwU4GDzhSucSVgw1gUFvHaLAHQiH+82Qeql1uoVOhET+z1WVKPHW1E+zczKyrqjYE/QkKe3n0A3Ho+9RAEEd2gimpzLAn9DzOjYO/GB9yibr7V97fHm4zYMKTJrVnCkgknK9AAhfU2YD1ygJXXteFycLfg1iUObzeFwYui10hGqhWHl7AKZpQrwVPCj+03kqCaoAC//JH7J83eF3oYqHDuY6epCsKHho9WBTt9p8CtwYoG2udvMaKsdFVUB1WGYuqoD2KdmHcP8lHbkSK6AoXI0XGLVdYl+ZZRcnC/+IEMEgNAodtqBEQ+3yZIbXNxUwihP/63qZ+b5BME8y6LFnXx0qsAQ3sOhxKAbAOCbmyeqKa3PQdCn4SvTZwaw==
+[push]
+	autoSetupRemote = true
 [credential]
 	helper = 
 	helper = /usr/local/share/gcm-core/git-credential-manager
 [credential "https://dev.azure.com"]
 	useHttpPath = true
-[push]
-	autoSetupRemote = true
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[commit]
+	gpgsign = true
