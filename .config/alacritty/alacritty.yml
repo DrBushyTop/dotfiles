@@ -40,13 +40,11 @@ window:
   startup_mode: Maximized
   padding:
     x: 2
-
+  ##  option_as_alt: OnlyRight
+  
 scrolling:
   history: 10000
   multiplier: 3
-
-# mac specific
-option_as_alt: Both
 
 key_bindings:
   - { key: A, mods: Command, chars: "\x01" }
@@ -78,3 +76,11 @@ key_bindings:
   - { key: Space, mods: Command, chars: "\x00" } 
   - { key: 30, chars: "^" }
   - { key: 30, mods: Shift, chars: "~"}
+  - { key: H, mods: Option, chars: "\x1bh" }
+  - { key: J, mods: Option, chars: "\x1bj" }
+  - { key: K, mods: Option, chars: "\x1bk" }
+  - { key: L, mods: Option, chars: "\x1bl" }
+  - { key: H, mods: Option|Shift, chars: "\x1bH" }
+  - { key: J, mods: Option|Shift, chars: "\x1bJ" }
+  - { key: K, mods: Option|Shift, chars: "\x1bK" }
+  - { key: L, mods: Option|Shift, chars: "\x1bL" }

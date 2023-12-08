@@ -14,7 +14,13 @@ return {
         csharp_ls = {},
         bicep = {},
         jsonls = {},
-        yamlls = {},
+        yamlls = {
+          settings = {
+            yaml = {
+              keyOrdering = false,
+            },
+          },
+        },
         lua_ls = {},
         gopls = {},
       },
