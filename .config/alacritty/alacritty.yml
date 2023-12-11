@@ -73,6 +73,8 @@ key_bindings:
   - { key: X, mods: Command, chars: "\x18" }
   - { key: Y, mods: Command, chars: "\x19" }
   - { key: Z, mods: Command, chars: "\x1a" }
+  - { key: N, mods: Control, chars: "\x37\x2D"} ## Fix to point to Command N
+  #- { key: Q, mods: Control, chars: "\x11"} ## Fix to point to Command Q
   - { key: Space, mods: Command, chars: "\x00" } 
   - { key: 30, chars: "^" }
   - { key: 30, mods: Shift, chars: "~"}
