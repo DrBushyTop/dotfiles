@@ -32,17 +32,19 @@ local function swapCmdCtrlEventHandler(event)
 end
 
 local swapCmdCtrlEventTapObj = eventtap.new({
-	eventTypes.flagsChanged,
 	eventTypes.keyDown,
 	eventTypes.keyUp,
+	eventTypes.flagsChanged,
 }, swapCmdCtrlEventHandler)
 
-TerminalFocusFilter = windowFilter.new("Terminal"):subscribe({
+TerminalFocusFilter = windowFilter.new("Alacritty"):subscribe({
 
 	[windowFilter.windowFocused] = function()
+		print("Focused!")
 		swapCmdCtrlEventTapObj:start()
 	end,
 	[windowFilter.windowUnfocused] = function()
+		print("Unfocused!")
 		swapCmdCtrlEventTapObj:stop()
 	end,
 })
