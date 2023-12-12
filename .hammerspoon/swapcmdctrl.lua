@@ -7,10 +7,11 @@ local function swapCmdCtrlEventHandler(event)
 	local flags = event:getFlags()
 	local keycode = event:getKeyCode()
 
-	if flags.cmd then
+	-- and clauses needed to allow hyper to work
+	if flags.cmd and not flags.ctrl then
 		flags.cmd = false
 		flags.ctrl = true
-	elseif flags.ctrl then
+	elseif flags.ctrl and not flags.cmd then
 		flags.ctrl = false
 		flags.cmd = true
 	end
