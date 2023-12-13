@@ -49,3 +49,15 @@ TerminalFocusFilter = windowFilter.new("Alacritty"):subscribe({
 		swapCmdCtrlEventTapObj:stop()
 	end,
 })
+
+TerminalFocusFilter = windowFilter.new("Warp"):subscribe({
+
+	[windowFilter.windowFocused] = function()
+		print("Focused!")
+		swapCmdCtrlEventTapObj:start()
+	end,
+	[windowFilter.windowUnfocused] = function()
+		print("Unfocused!")
+		swapCmdCtrlEventTapObj:stop()
+	end,
+})
