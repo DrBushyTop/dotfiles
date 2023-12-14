@@ -21,11 +21,11 @@ local function map(mode, lhs, rhs, opts)
 end
 
 -- Copying lines up and down in visual mode
-map("v", "<A-S-j>", ":t '>+1<cr>gv=gv", { desc = "Copy down" })
-map("v", "<A-S-k>", ":t '<-2<cr>gv=gv", { desc = "Copy up" })
+vim.keymap.set("v", "<A-S-j>", ":t '>+1<cr>gv=gv", { desc = "Copy down" })
+vim.keymap.set("v", "<A-S-k>", ":t '<-2<cr>gv=gv", { desc = "Copy up" })
 
 -- VS Code like Ctrl D multiselect replace
-map("n", "<A-S-d>", "*Ncgn", { desc = "Multiselect replace" })
+vim.keymap.set("n", "<A-S-d>", "*Ncgn", { desc = "Multiselect replace" })
 -- kj and jk to escape insert mode
-map("i", "kj", "<esc>", { desc = "Escape insert mode" })
-map("i", "jk", "<esc>", { desc = "Escape insert mode" })
+vim.keymap.set("i", "kj", "<esc>", { desc = "Escape insert mode" })
+vim.keymap.set("i", "jk", "<esc>", { desc = "Escape insert mode" })
