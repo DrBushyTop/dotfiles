@@ -1,0 +1,302 @@
+import = ["/Users/pasi/.config/alacritty/catppuccin/catppuccin-macchiato.toml"]
+live_config_reload = true
+# "window.dynamic_title" = true
+[cursor]
+unfocused_hollow = true
+
+[cursor.style]
+shape = "Block"
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 20.0
+
+[font.normal]
+family = "SauceCodePro Nerd Font Mono"
+style = "Regular"
+
+[[keyboard.bindings]]
+chars = "^"
+key = 30
+
+[[keyboard.bindings]]
+chars = "~"
+key = 30
+mods = "Shift"
+
+[[keyboard.bindings]]
+chars = "\u001Ba"
+key = "A"
+mods = "Option"
+
+[[keyboard.bindings]]
+chars = "\u001BA"
+key = "A"
+mods = "Option|Shift"
+
+[[keyboard.bindings]]
+chars = "\u001Bb"
+key = "B"
+mods = "Option"
+
+[[keyboard.bindings]]
+chars = "\u001BB"
+key = "B"
+mods = "Option|Shift"
+
+[[keyboard.bindings]]
+chars = "\u001Bc"
+key = "C"
+mods = "Option"
+
+[[keyboard.bindings]]
+chars = "\u001BC"
+key = "C"
+mods = "Option|Shift"
+
+[[keyboard.bindings]]
+chars = "\u001Bd"
+key = "D"
+mods = "Option"
+
+[[keyboard.bindings]]
+chars = "\u001BD"
+key = "D"
+mods = "Option|Shift"
+
+[[keyboard.bindings]]
+chars = "\u001Be"
+key = "E"
+mods = "Option"
+
+[[keyboard.bindings]]
+chars = "\u001BE"
+key = "E"
+mods = "Option|Shift"
+
+[[keyboard.bindings]]
+chars = "\u001Bf"
+key = "F"
+mods = "Option"
+
+[[keyboard.bindings]]
+chars = "\u001BF"
+key = "F"
+mods = "Option|Shift"
+
+[[keyboard.bindings]]
+chars = "\u001Bg"
+key = "G"
+mods = "Option"
+
+[[keyboard.bindings]]
+chars = "\u001BG"
+key = "G"
+mods = "Option|Shift"
+
+[[keyboard.bindings]]
+chars = "\u001Bh"
+key = "H"
+mods = "Option"
+
+[[keyboard.bindings]]
+chars = "\u001BH"
+key = "H"
+mods = "Option|Shift"
+
+[[keyboard.bindings]]
+chars = "\u001Bi"
+key = "I"
+mods = "Option"
+
+[[keyboard.bindings]]
+chars = "\u001BI"
+key = "I"
+mods = "Option|Shift"
+
+[[keyboard.bindings]]
+chars = "\u001Bj"
+key = "J"
+mods = "Option"
+
+[[keyboard.bindings]]
+chars = "\u001BJ"
+key = "J"
+mods = "Option|Shift"
+
+[[keyboard.bindings]]
+chars = "\u001Bk"
+key = "K"
+mods = "Option"
+
+[[keyboard.bindings]]
+chars = "\u001BK"
+key = "K"
+mods = "Option|Shift"
+
+[[keyboard.bindings]]
+chars = "\u001Bl"
+key = "L"
+mods = "Option"
+
+[[keyboard.bindings]]
+chars = "\u001BL"
+key = "L"
+mods = "Option|Shift"
+
+[[keyboard.bindings]]
+chars = "\u001Bm"
+key = "M"
+mods = "Option"
+
+[[keyboard.bindings]]
+chars = "\u001BM"
+key = "M"
+mods = "Option|Shift"
+
+[[keyboard.bindings]]
+chars = "\u001Bn"
+key = "N"
+mods = "Option"
+
+[[keyboard.bindings]]
+chars = "\u001BN"
+key = "N"
+mods = "Option|Shift"
+
+[[keyboard.bindings]]
+chars = "\u001Bo"
+key = "O"
+mods = "Option"
+
+[[keyboard.bindings]]
+chars = "\u001BO"
+key = "O"
+mods = "Option|Shift"
+
+[[keyboard.bindings]]
+chars = "\u001Bp"
+key = "P"
+mods = "Option"
+
+[[keyboard.bindings]]
+chars = "\u001BP"
+key = "P"
+mods = "Option|Shift"
+
+[[keyboard.bindings]]
+chars = "\u001Bq"
+key = "Q"
+mods = "Option"
+
+[[keyboard.bindings]]
+chars = "\u001BQ"
+key = "Q"
+mods = "Option|Shift"
+
+[[keyboard.bindings]]
+chars = "\u001Br"
+key = "R"
+mods = "Option"
+
+[[keyboard.bindings]]
+chars = "\u001BR"
+key = "R"
+mods = "Option|Shift"
+
+[[keyboard.bindings]]
+chars = "\u001Bs"
+key = "S"
+mods = "Option"
+
+[[keyboard.bindings]]
+chars = "\u001BS"
+key = "S"
+mods = "Option|Shift"
+
+[[keyboard.bindings]]
+chars = "\u001Bt"
+key = "T"
+mods = "Option"
+
+[[keyboard.bindings]]
+chars = "\u001BT"
+key = "T"
+mods = "Option|Shift"
+
+[[keyboard.bindings]]
+chars = "\u001Bu"
+key = "U"
+mods = "Option"
+
+[[keyboard.bindings]]
+chars = "\u001BU"
+key = "U"
+mods = "Option|Shift"
+
+[[keyboard.bindings]]
+chars = "\u001Bv"
+key = "V"
+mods = "Option"
+
+[[keyboard.bindings]]
+chars = "\u001BV"
+key = "V"
+mods = "Option|Shift"
+
+[[keyboard.bindings]]
+chars = "\u001Bw"
+key = "W"
+mods = "Option"
+
+[[keyboard.bindings]]
+chars = "\u001BW"
+key = "W"
+mods = "Option|Shift"
+
+[[keyboard.bindings]]
+chars = "\u001Bx"
+key = "X"
+mods = "Option"
+
+[[keyboard.bindings]]
+chars = "\u001BX"
+key = "X"
+mods = "Option|Shift"
+
+[[keyboard.bindings]]
+chars = "\u001BY"
+key = "Y"
+mods = "Option"
+
+[[keyboard.bindings]]
+chars = "\u001BY"
+key = "Y"
+mods = "Option|Shift"
+
+[[keyboard.bindings]]
+chars = "\u001Bz"
+key = "Z"
+mods = "Option"
+
+[[keyboard.bindings]]
+chars = "\u001BZ"
+key = "Z"
+mods = "Option|Shift"
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[selection]
+save_to_clipboard = true
+semantic_escape_chars = ",│|:\"' ()[]{}<>\t"
+
+[window]
+decorations = "none"
+startup_mode = "Maximized"
+
+[window.padding]
+x = 2
