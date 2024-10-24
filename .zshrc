@@ -125,8 +125,8 @@ alias vim=nvim
 alias sed=sd
 alias cat=bat
 alias curl=xh
-alias ls='exa --icons --git'
-alias lt='exa --tree --level=2 --long --icons --git'
+alias ls='eza --icons --git'
+alias lt='eza --tree --level=2 --long --icons --git'
 
 complete -F __start_kubectl k
 
