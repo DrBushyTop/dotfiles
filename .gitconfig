@@ -17,6 +17,7 @@
 	useHttpPath = true
 [core]
 	pager = delta
+	autocrlf = input
 [interactive]
 	diffFilter = delta --color-only --features=interactive
 [delta]
