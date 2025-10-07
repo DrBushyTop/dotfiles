@@ -124,15 +124,12 @@ alias g=git
 alias vim=nvim
 alias sed=sd
 alias cat=bat
-alias curl=xh
 alias ls='eza --icons --git'
 alias lt='eza --tree --level=2 --long --icons --git'
 
 complete -F __start_kubectl k
 
 source <(kubectl completion zsh)
-source <(flux completion zsh)
-compdef _flux flux
 
 # Locale
 # Should probably live somewhere else instead
@@ -183,8 +180,10 @@ export PATH=$HOME/bin:$PATH
 export PATH=$HOME/randomTools:$PATH
 [ -f ~/scripts/cht.zsh ] && source ~/scripts/cht.zsh
 
-# GH Copilot Aliases
-eval "$(github-copilot-cli alias -- "$0")"
-
 # To customize prompt, run `p10k configure` or edit ~/.dotfiles/.p10k.zsh.
 [[ ! -f ~/.dotfiles/.p10k.zsh ]] || source ~/.dotfiles/.p10k.zsh
+
+# carapace
+export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
+zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+source <(carapace _carapace)

@@ -1,4 +1,5 @@
 require("swapcmdctrl")
+-- require("debug-moon")
 
 function reloadConfig(files)
 	doReload = false
