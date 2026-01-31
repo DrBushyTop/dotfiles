@@ -178,6 +178,7 @@ export PATH=$HOME/go/bin:$PATH
 export PATH=$HOME/scripts:$PATH
 export PATH=$HOME/bin:$PATH
 export PATH=$HOME/randomTools:$PATH
+export PATH=$HOME/.bun/bin:$PATH
 [ -f ~/scripts/cht.zsh ] && source ~/scripts/cht.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.dotfiles/.p10k.zsh.
@@ -187,3 +188,6 @@ export PATH=$HOME/randomTools:$PATH
 export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
 zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
 source <(carapace _carapace)
+
+# opencode
+export PATH=/Users/pasi/.opencode/bin:$PATH

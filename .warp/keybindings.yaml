@@ -1,3 +1,4 @@
 ---
-"workspace:toggle_ai_assistant": cmd-space
+"input:open_completion_suggestions": tab
 "workspace:show_settings_about_page": none
+"workspace:toggle_ai_assistant": cmd-space
