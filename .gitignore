@@ -2,3 +2,6 @@
 
 .config/github-copilot
 .config/containers
+
+# Raycast config (contains access tokens)
+.config/raycast/config.json
