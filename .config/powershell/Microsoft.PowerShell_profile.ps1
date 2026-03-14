@@ -1,4 +1,4 @@
-oh-my-posh init pwsh --config "/opt/homebrew/Cellar/oh-my-posh/28.10.0/themes/catppuccin_macchiato.omp.json" | Invoke-Expression
+oh-my-posh init pwsh --config "/opt/homebrew/Cellar/oh-my-posh/29.6.1/themes/catppuccin_macchiato.omp.json" | Invoke-Expression
 Import-Module posh-git
 
 Set-PSReadLineOption -PredictionSource HistoryAndPlugin

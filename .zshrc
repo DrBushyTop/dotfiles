@@ -1,3 +1,8 @@
+# Only run interactive shell setup when zsh is interactive.
+# Some GUI apps spawn a non-interactive login shell (`zsh -l -c ...`), and
+# sourcing this file there can break startup (e.g. zle/gitstatus errors).
+[[ -o interactive ]] || return
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -99,7 +104,7 @@ rm -f ~/.zcompdump; compinit
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then

@@ -10,11 +10,6 @@
 	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
 [commit]
 	gpgsign = true
-[credential]
-	helper = 
-	helper = /usr/local/share/gcm-core/git-credential-manager
-[credential "https://dev.azure.com"]
-	useHttpPath = true
 [core]
 	pager = delta
 	autocrlf = input
@@ -86,3 +81,8 @@
 		bold yellow => syntax "#544f4e"
 	# Should match the name of the bat theme
 	syntax-theme = Catppuccin Mocha
+[credential]
+	helper = 
+	helper = /usr/local/share/gcm-core/git-credential-manager
+[credential "https://dev.azure.com"]
+	useHttpPath = true
