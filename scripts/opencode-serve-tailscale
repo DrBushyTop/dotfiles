@@ -1,0 +1,26 @@
+#!/bin/zsh
+set -eu
+
+opencode_bin="${OPENCODE_BIN:-/opt/homebrew/bin/opencode}"
+tailscale_bin="${TAILSCALE_BIN:-/opt/homebrew/bin/tailscale}"
+port="${OPENCODE_SERVER_PORT:-4096}"
+
+if [[ ! -x "$opencode_bin" ]]; then
+  print -u2 "opencode binary not found at $opencode_bin"
+  exit 1
+fi
+
+if [[ ! -x "$tailscale_bin" ]]; then
+  print -u2 "tailscale binary not found at $tailscale_bin"
+  exit 1
+fi
+
+tailscale_ip="$($tailscale_bin ip -4 | /usr/bin/python3 -c 'import sys
+for line in sys.stdin:
+    line = line.strip()
+    if line:
+        print(line)
+        raise SystemExit(0)
+raise SystemExit(1)')"
+
+exec "$opencode_bin" serve --hostname "$tailscale_ip" --port "$port"

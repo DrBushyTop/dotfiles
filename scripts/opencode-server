@@ -1,0 +1,337 @@
+#!/bin/zsh
+set -eu
+
+script_dir="${0:A:h}"
+if [[ -f "$script_dir/opencode.local.zsh" ]]; then
+  source "$script_dir/opencode.local.zsh"
+fi
+
+label="com.pasi.opencode-tailscale"
+proxy_label="com.pasi.opencode-loopback-proxy"
+port="${OPENCODE_SERVER_PORT:-4096}"
+loopback_port="${OPENCODE_LOOPBACK_PORT:-14096}"
+service_name="${OPENCODE_SERVICE_NAME:-svc:ocm1}"
+service_tcp_url="${OPENCODE_TAILSCALE_URL:-http://ocm1:4096}"
+service_web_url="${OPENCODE_SERVICE_WEB_URL:-https://ocm1.saiga-bleak.ts.net}"
+launch_domain="system"
+system_plist="/Library/LaunchDaemons/$label.plist"
+proxy_system_plist="/Library/LaunchDaemons/$proxy_label.plist"
+legacy_launch_agent="$HOME/Library/LaunchAgents/$label.plist"
+repo_root="${script_dir:h}"
+repo_plist="$repo_root/Library/LaunchDaemons/$label.plist"
+proxy_repo_plist="$repo_root/Library/LaunchDaemons/$proxy_label.plist"
+opencode_bin="${OPENCODE_BIN:-/opt/homebrew/bin/opencode}"
+tailscale_bin="${TAILSCALE_BIN:-/opt/homebrew/bin/tailscale}"
+log_file="${OPENCODE_SERVER_LOG:-/tmp/opencode-tailscale.log}"
+proxy_log_file="${OPENCODE_PROXY_LOG:-/tmp/opencode-loopback-proxy.log}"
+run_user="${SUDO_USER:-$(id -un)}"
+run_home="$(dscl . -read "/Users/$run_user" NFSHomeDirectory 2>/dev/null | /usr/bin/python3 -c 'import sys
+parts = sys.stdin.read().strip().split(None, 1)
+print(parts[1] if len(parts) == 2 else "")')"
+run_group="$(id -gn "$run_user")"
+
+usage() {
+  cat <<EOF
+Usage: opencode-server <command>
+
+Commands:
+  install    install and load the launch daemon
+  uninstall  unload and remove the launch daemon
+  start      start the opencode server
+  stop       stop the opencode server
+  restart    restart the opencode server
+  status     show launchd and HTTP status
+  url        print the Tailscale URL
+  publish-service configure $service_name endpoints
+  attach     attach from the current directory
+  log        print the log file path
+EOF
+}
+
+tailscale_dns() {
+  "$tailscale_bin" status --json | /usr/bin/python3 -c 'import json, sys
+data = json.load(sys.stdin)
+print(data.get("Self", {}).get("DNSName", "").rstrip("."))'
+}
+
+tailscale_short_host() {
+  local dns_name
+  dns_name="$(tailscale_dns 2>/dev/null || true)"
+  if [[ -n "$dns_name" ]]; then
+    print "${dns_name%%.*}"
+    return
+  fi
+  scutil --get LocalHostName 2>/dev/null | tr '[:upper:]' '[:lower:]'
+}
+
+tailscale_ip() {
+  "$tailscale_bin" ip -4 | /usr/bin/python3 -c 'import sys
+for line in sys.stdin:
+    line = line.strip()
+    if line:
+        print(line)
+        raise SystemExit(0)
+raise SystemExit(1)'
+}
+
+server_host() {
+  tailscale_ip
+}
+
+server_url() {
+  print "http://$(server_host):$port"
+}
+
+short_url() {
+  local short_host
+  short_host="$(tailscale_short_host 2>/dev/null || true)"
+  if [[ -n "$short_host" ]]; then
+    print "http://$short_host:$port"
+  fi
+}
+
+normalize_url() {
+  local target="${1:-}"
+  if [[ -z "$target" ]]; then
+    server_url
+  elif [[ "$target" == http://* || "$target" == https://* ]]; then
+    print "$target"
+  elif [[ "$target" == *:* ]]; then
+    print "http://$target"
+  else
+    print "http://$target:$port"
+  fi
+}
+
+is_loaded() {
+  launchctl print "$launch_domain/$1" >/dev/null 2>&1
+}
+
+is_legacy_loaded() {
+  launchctl print "gui/$(id -u "$run_user")/$label" >/dev/null 2>&1
+}
+
+is_reachable() {
+  /usr/bin/curl -fsS "$(server_url)/" >/dev/null 2>&1
+}
+
+require_plist() {
+  if [[ ! -f "$system_plist" ]]; then
+    print -u2 "LaunchDaemon missing at $system_plist"
+    print -u2 "Run: opencode-server install"
+    exit 1
+  fi
+  if [[ ! -f "$proxy_system_plist" ]]; then
+    print -u2 "LaunchDaemon missing at $proxy_system_plist"
+    print -u2 "Run: opencode-server install"
+    exit 1
+  fi
+}
+
+reexec_with_sudo() {
+  if [[ $EUID -eq 0 ]]; then
+    return
+  fi
+
+  if [[ -t 0 && -t 1 ]]; then
+    exec sudo "$0" "$command" "$@"
+  fi
+
+  print -u2 "This command must be run as root: $command"
+  exit 1
+}
+
+render_plist() {
+  local source_plist="$1"
+  if [[ ! -f "$source_plist" ]]; then
+    print -u2 "Tracked plist missing at $source_plist"
+    exit 1
+  fi
+
+  /usr/bin/python3 - "$source_plist" "$run_user" "$run_home" "$run_group" <<'PY'
+from pathlib import Path
+import sys
+
+template = Path(sys.argv[1]).read_text()
+template = template.replace('/Users/pasi/.dotfiles', str(Path(sys.argv[1]).resolve().parents[2]))
+template = template.replace('/Users/pasi', sys.argv[3])
+template = template.replace('<string>pasi</string>', f'<string>{sys.argv[2]}</string>', 2)
+template = template.replace('<string>staff</string>', f'<string>{sys.argv[4]}</string>', 1)
+sys.stdout.write(template)
+PY
+}
+
+migrate_legacy_agent() {
+  launchctl bootout "gui/$(id -u "$run_user")/$label" >/dev/null 2>&1 || true
+  rm -f "$legacy_launch_agent"
+}
+
+install_service() {
+  migrate_legacy_agent
+  render_plist "$repo_plist" > "$system_plist"
+  render_plist "$proxy_repo_plist" > "$proxy_system_plist"
+  chown root:wheel "$system_plist"
+  chown root:wheel "$proxy_system_plist"
+  chmod 644 "$system_plist"
+  chmod 644 "$proxy_system_plist"
+  launchctl bootout "$launch_domain/$proxy_label" >/dev/null 2>&1 || launchctl bootout "$launch_domain" "$proxy_system_plist" >/dev/null 2>&1 || true
+  launchctl bootout "$launch_domain/$label" >/dev/null 2>&1 || launchctl bootout "$launch_domain" "$system_plist" >/dev/null 2>&1 || true
+  launchctl bootstrap "$launch_domain" "$proxy_system_plist"
+  launchctl bootstrap "$launch_domain" "$system_plist"
+  launchctl enable "$launch_domain/$proxy_label" >/dev/null 2>&1 || true
+  launchctl enable "$launch_domain/$label" >/dev/null 2>&1 || true
+  launchctl kickstart -k "$launch_domain/$proxy_label"
+  launchctl kickstart -k "$launch_domain/$label"
+}
+
+stop_service() {
+  if is_loaded "$label"; then
+    launchctl bootout "$launch_domain/$label" >/dev/null 2>&1 || launchctl bootout "$launch_domain" "$system_plist" >/dev/null 2>&1 || true
+  fi
+  if is_loaded "$proxy_label"; then
+    launchctl bootout "$launch_domain/$proxy_label" >/dev/null 2>&1 || launchctl bootout "$launch_domain" "$proxy_system_plist" >/dev/null 2>&1 || true
+  fi
+}
+
+start_service() {
+  require_plist
+  if ! is_loaded "$proxy_label"; then
+    launchctl bootstrap "$launch_domain" "$proxy_system_plist"
+  fi
+  if ! is_loaded "$label"; then
+    launchctl bootstrap "$launch_domain" "$system_plist"
+  fi
+  launchctl enable "$launch_domain/$proxy_label" >/dev/null 2>&1 || true
+  launchctl enable "$launch_domain/$label" >/dev/null 2>&1 || true
+  launchctl kickstart -k "$launch_domain/$proxy_label"
+  launchctl kickstart -k "$launch_domain/$label"
+}
+
+restart_service() {
+  require_plist
+  if is_loaded "$proxy_label"; then
+    launchctl kickstart -k "$launch_domain/$proxy_label"
+  fi
+  if is_loaded "$label"; then
+    launchctl kickstart -k "$launch_domain/$label"
+  else
+    start_service
+  fi
+}
+
+publish_service() {
+  "$tailscale_bin" serve --service="$service_name" --tcp="$port" "tcp://127.0.0.1:$loopback_port"
+  "$tailscale_bin" serve --service="$service_name" --https=443 "http://127.0.0.1:$loopback_port"
+}
+
+status_service() {
+  print "URL: $(server_url)"
+  local short
+  short="$(short_url 2>/dev/null || true)"
+  if [[ -n "$short" ]]; then
+    print "Short: $short"
+  fi
+  print "Loopback proxy: http://127.0.0.1:$loopback_port"
+  print "Service TCP: $service_tcp_url"
+  print "Service Web: $service_web_url"
+  local dns_name
+  dns_name="$(tailscale_dns 2>/dev/null || true)"
+  if [[ -n "$dns_name" ]]; then
+    print "MagicDNS: http://$dns_name:$port"
+  fi
+  print "Log: $log_file"
+  print "Proxy log: $proxy_log_file"
+  if is_loaded "$label"; then
+    print "launchd: loaded"
+  else
+    print "launchd: not loaded"
+  fi
+  if is_loaded "$proxy_label"; then
+    print "proxy: loaded"
+  else
+    print "proxy: not loaded"
+  fi
+
+  if is_legacy_loaded; then
+    print "legacy-launchagent: loaded"
+  fi
+
+  if is_reachable; then
+    print "http: reachable"
+  else
+    print "http: not reachable"
+  fi
+}
+
+attach_service() {
+  local target=""
+  local dir="$PWD"
+
+  if [[ $# -gt 0 ]]; then
+    if [[ "$1" == /* || "$1" == ./* || "$1" == ../* || "$1" == ~* || -d ${~1} ]]; then
+      dir="$1"
+    else
+      target="$1"
+      shift
+      if [[ $# -gt 0 ]]; then
+        dir="$1"
+      fi
+    fi
+  fi
+
+  exec "$opencode_bin" attach "$(normalize_url "$target")" --dir "$dir"
+}
+
+command="${1:-status}"
+if [[ $# -gt 0 ]]; then
+  shift
+fi
+
+case "$command" in
+  install)
+    reexec_with_sudo "$@"
+    install_service
+    ;;
+  uninstall)
+    reexec_with_sudo "$@"
+    stop_service
+    rm -f "$system_plist"
+    rm -f "$proxy_system_plist"
+    ;;
+  start)
+    reexec_with_sudo "$@"
+    start_service
+    ;;
+  stop)
+    reexec_with_sudo "$@"
+    stop_service
+    ;;
+  restart)
+    reexec_with_sudo "$@"
+    restart_service
+    ;;
+  status)
+    status_service
+    ;;
+  url)
+    short="$(short_url 2>/dev/null || true)"
+    if [[ -n "$short" ]]; then
+      print "$short"
+    else
+      server_url
+    fi
+    ;;
+  publish-service)
+    publish_service
+    ;;
+  attach)
+    attach_service "$@"
+    ;;
+  log)
+    print "$log_file"
+    ;;
+  *)
+    usage
+    exit 1
+    ;;
+esac

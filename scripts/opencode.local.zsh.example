@@ -1,0 +1,4 @@
+export OPENCODE_CODE_ROOT="$HOME/Code"
+export OPENCODE_TAILSCALE_URL="http://ocm1:4096"
+export OPENCODE_SERVICE_NAME="svc:ocm1"
+export OPENCODE_SERVICE_WEB_URL="https://ocm1.saiga-bleak.ts.net"

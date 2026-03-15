@@ -1,0 +1,35 @@
+#!/bin/zsh
+set -eu
+
+script_dir="${0:A:h}"
+if [[ -f "$script_dir/opencode.local.zsh" ]]; then
+  source "$script_dir/opencode.local.zsh"
+fi
+
+code_root="${OPENCODE_CODE_ROOT:-/Users/pasi/Code}"
+
+if ! command -v fzf >/dev/null 2>&1; then
+  print -u2 "fzf is required for opencode-pick-dir"
+  exit 1
+fi
+
+/usr/bin/python3 - "$code_root" <<'PY' | fzf --height=40% --layout=reverse --prompt='code> '
+from pathlib import Path
+import sys
+
+code_root = Path(sys.argv[1]).expanduser()
+roots = [code_root / "Zure", code_root / "Omat"]
+choices = []
+
+for root in roots:
+    if not root.is_dir():
+        continue
+    children = sorted([child for child in root.iterdir() if child.is_dir()], key=lambda p: p.name.lower())
+    if children:
+        choices.extend(str(child) for child in children)
+    else:
+        choices.append(str(root))
+
+for choice in choices:
+    print(choice)
+PY

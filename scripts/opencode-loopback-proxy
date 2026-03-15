@@ -1,0 +1,71 @@
+#!/usr/bin/env python3
+import os
+import signal
+import socket
+import socketserver
+import subprocess
+import threading
+
+
+BIND_HOST = "127.0.0.1"
+BIND_PORT = int(os.environ.get("OPENCODE_LOOPBACK_PORT", "14096"))
+REMOTE_PORT = int(os.environ.get("OPENCODE_SERVER_PORT", "4096"))
+TAILSCALE_BIN = os.environ.get("TAILSCALE_BIN", "/opt/homebrew/bin/tailscale")
+
+
+def tailscale_ip() -> str:
+    output = subprocess.check_output([TAILSCALE_BIN, "ip", "-4"], text=True)
+    for line in output.splitlines():
+        line = line.strip()
+        if line:
+            return line
+    raise RuntimeError("no tailscale IPv4 address found")
+
+
+def pipe_bytes(source: socket.socket, target: socket.socket) -> None:
+    try:
+        while True:
+            data = source.recv(65536)
+            if not data:
+                break
+            target.sendall(data)
+    except OSError:
+        pass
+    finally:
+        try:
+            target.shutdown(socket.SHUT_WR)
+        except OSError:
+            pass
+
+
+class ProxyHandler(socketserver.BaseRequestHandler):
+    def handle(self) -> None:
+        upstream = socket.create_connection((tailscale_ip(), REMOTE_PORT))
+        try:
+            forward = threading.Thread(target=pipe_bytes, args=(self.request, upstream), daemon=True)
+            backward = threading.Thread(target=pipe_bytes, args=(upstream, self.request), daemon=True)
+            forward.start()
+            backward.start()
+            forward.join()
+            backward.join()
+        finally:
+            upstream.close()
+            self.request.close()
+
+
+class ThreadedTCPServer(socketserver.ThreadingTCPServer):
+    allow_reuse_address = True
+    daemon_threads = True
+
+
+server = ThreadedTCPServer((BIND_HOST, BIND_PORT), ProxyHandler)
+
+
+def shutdown(_signum, _frame) -> None:
+    server.shutdown()
+
+
+signal.signal(signal.SIGTERM, shutdown)
+signal.signal(signal.SIGINT, shutdown)
+
+server.serve_forever()
