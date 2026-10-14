@@ -131,6 +131,8 @@ alias sed=sd
 alias cat=bat
 alias ls='eza --icons --git'
 alias lt='eza --tree --level=2 --long --icons --git'
+alias ocph="$HOME/bin/opencode-patched"
+ocphupdate() { bun run --cwd "$HOME/Code/Omat/OpenCode-Patches" update:macos -- "$@" }
 
 complete -F __start_kubectl k
 
@@ -185,6 +187,7 @@ export PATH=$HOME/bin:$PATH
 export PATH=$HOME/randomTools:$PATH
 export PATH=$HOME/.bun/bin:$PATH
 [ -f ~/scripts/cht.zsh ] && source ~/scripts/cht.zsh
+[ -f ~/scripts/opencode.zsh ] && source ~/scripts/opencode.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.dotfiles/.p10k.zsh.
 [[ ! -f ~/.dotfiles/.p10k.zsh ]] || source ~/.dotfiles/.p10k.zsh
@@ -196,3 +199,6 @@ source <(carapace _carapace)
 
 # opencode
 export PATH=/Users/pasi/.opencode/bin:$PATH
+_op_sock="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+[ -S "$_op_sock" ] && export SSH_AUTH_SOCK="$_op_sock"
+unset _op_sock

@@ -20,15 +20,19 @@ legacy_launch_agent="$HOME/Library/LaunchAgents/$label.plist"
 repo_root="${script_dir:h}"
 repo_plist="$repo_root/Library/LaunchDaemons/$label.plist"
 proxy_repo_plist="$repo_root/Library/LaunchDaemons/$proxy_label.plist"
-opencode_bin="${OPENCODE_BIN:-/opt/homebrew/bin/opencode}"
-tailscale_bin="${TAILSCALE_BIN:-/opt/homebrew/bin/tailscale}"
-log_file="${OPENCODE_SERVER_LOG:-/tmp/opencode-tailscale.log}"
-proxy_log_file="${OPENCODE_PROXY_LOG:-/tmp/opencode-loopback-proxy.log}"
 run_user="${SUDO_USER:-$(id -un)}"
 run_home="$(dscl . -read "/Users/$run_user" NFSHomeDirectory 2>/dev/null | /usr/bin/python3 -c 'import sys
 parts = sys.stdin.read().strip().split(None, 1)
 print(parts[1] if len(parts) == 2 else "")')"
 run_group="$(id -gn "$run_user")"
+default_opencode_bin="$run_home/.opencode/bin/opencode"
+if [[ ! -x "$default_opencode_bin" ]]; then
+  default_opencode_bin="/opt/homebrew/bin/opencode"
+fi
+opencode_bin="${OPENCODE_BIN:-$default_opencode_bin}"
+tailscale_bin="${TAILSCALE_BIN:-/opt/homebrew/bin/tailscale}"
+log_file="${OPENCODE_SERVER_LOG:-/tmp/opencode-tailscale.log}"
+proxy_log_file="${OPENCODE_PROXY_LOG:-/tmp/opencode-loopback-proxy.log}"
 
 usage() {
   cat <<EOF

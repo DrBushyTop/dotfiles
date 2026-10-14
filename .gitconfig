@@ -11,7 +11,7 @@
 [commit]
 	gpgsign = true
 [core]
-	pager = delta
+	pager = cat
 	autocrlf = input
 [interactive]
 	diffFilter = delta --color-only --features=interactive

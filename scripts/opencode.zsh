@@ -3,7 +3,7 @@ if [[ -f "$HOME/scripts/opencode.local.zsh" ]]; then
 fi
 
 export OPENCODE_CODE_ROOT="${OPENCODE_CODE_ROOT:-/Users/pasi/Code}"
-export OPENCODE_TAILSCALE_URL="${OPENCODE_TAILSCALE_URL:-http://ocm1:4096}"
+export OPENCODE_TAILSCALE_URL="${OPENCODE_TAILSCALE_URL:-http://m1:4096}"
 
 _opencode_resolve_dir() {
   local input="${1:-}"
@@ -42,7 +42,7 @@ oclocal() {
   else
     dir="$(_opencode_resolve_dir "$dir")"
   fi
-  opencode-server attach "$dir"
+  opencode "$dir"
 }
 
 ocremote() {

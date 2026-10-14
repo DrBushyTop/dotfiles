@@ -6,3 +6,5 @@ keybind = alt+right=unbind
 font-family = "SauceCodePro Nerd Font Mono"
 
 theme = catppuccin-macchiato.conf
+
+shell-integration-features = ssh-terminfo, path

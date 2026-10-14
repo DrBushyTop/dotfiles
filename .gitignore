@@ -3,11 +3,25 @@
 .config/github-copilot
 .config/containers
 
-# Raycast config (contains access tokens)
-.config/raycast/config.json
-
-.config/raycast/extensions
+# Raycast config, endpoint tokens and caches
+.config/raycast
 
 .config/opencode
 
 .config/gh
+
+# Machine-local state and caches
+.config/configstore
+.config/zellij/*.bak*
+bin/opencode-patched
+
+# Contains subscription and resource names
+.config/aca
+
+# Model config snapshots include copies of opencode.jsonc with API tokens
+.config/model-config-backups
+
+# HumanLayer skills are proprietary ("All rights reserved"); keep them local
+.config/agent-skills-archive
+.config/agent-skills/*
+!.config/agent-skills/unslop
