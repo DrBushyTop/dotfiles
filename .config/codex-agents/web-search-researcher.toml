@@ -1,6 +1,6 @@
 name = "web-search-researcher"
 description = "Research external documentation and version-specific library or API behavior. Use when codebase research needs primary-source evidence and direct source links."
-model = "gpt-6.1-sol"
+model = "gpt-6.2-sol"
 model_provider = "openai"
 model_reasoning_effort = "medium"
 sandbox_mode = "read-only"
